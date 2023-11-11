@@ -1,5 +1,6 @@
 library product_detail;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ import '../../../../utils/services/model/user.dart';
 import '../../../../utils/services/src/product_service.dart';
 import '../../../../utils/services/src/user_service.dart';
 import '../../../../utils/ui/app_snackbar.dart';
-import '../../../explore/screens/cart_screen.dart';
+import '../../../explore/screens/cartpages/cart_screen.dart';
 import '../../../explore/screens/favorites_screen.dart';
 // binding
 part '../../bindings/product_detail_binding.dart';
@@ -162,6 +163,9 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
                     CustomBackButton(
                         onPressed: () => _pdetailcontroller.back()),
                     const Spacer(),
+                    CustomDeleteButton(
+                        onPressed: () => _pdetailcontroller.onDeleteProduct()),
+                    const SizedBox(width: 15),
                     _FavoriteButton(
                       initial: product.isFavorite,
                       onChanged: (favorite) {
