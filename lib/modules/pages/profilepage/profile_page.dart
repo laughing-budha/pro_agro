@@ -14,13 +14,26 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        elevation:0,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
+              GetStorage().read('isadmin') == true
+                  ? const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Admin',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               const CircleAvatar(
                 radius: 80,
                 backgroundImage: AssetImage('assets/profile.png'),

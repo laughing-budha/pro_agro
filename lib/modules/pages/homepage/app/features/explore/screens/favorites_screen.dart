@@ -48,7 +48,6 @@ class Favorites extends GetView<FavoritesController> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(_favoritesController.favoriteProducts.toString());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -59,10 +58,10 @@ class Favorites extends GetView<FavoritesController> {
               width: 10,
             ),
             CustomBackButton(onPressed: () => Get.back()),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
-            Text(
+            const Text(
               'Favorites',
               style: TextStyle(
                   color: Colors.black,
@@ -110,7 +109,7 @@ class Favorites extends GetView<FavoritesController> {
                                   fontSize: 20,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               Text(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pro_agro/model/user_data.dart';
 import 'package:pro_agro/modules/auth/login_screen.dart';
+import '../modules/pages/botomscreen/bottom_screens.dart';
 
 class AuthController extends GetxController {
   // Singleton instance of the AuthController
@@ -31,35 +32,17 @@ class AuthController extends GetxController {
     // Initialize GetStorage
     GetStorage.init().then((_) {
       // Check for logged in user
-      final box = GetStorage();
-      final isLoggedIn = box.read('isLoggedIn') ?? false;
+      // final box = GetStorage();
+      // final isLoggedIn = box.read('isLoggedIn') ?? false;
 
-      if (isLoggedIn) {
-        // final email = box.read('email');
-        // Get.offAll(() => PersistentBottomView());
-      } else {
-        // Get.offAll(() => const BoardingScreen());
-      }
+      // if (isLoggedIn) {
+      // final email = box.read('email');
+      // Get.offAll(() => PersistentBottomView());
+      // } else {
+      // Get.offAll(() => const BoardingScreen());
+      // }
     });
   }
-  // _initialPage(User? user) {
-  //   if (user == null) {
-  //     // If no user, navigate to login page
-  //     print("Login Page");
-  //     // Get.offAll(() => const BoardingScreen());
-  //   } else {
-  //     // If user is logged in, navigate to home screen
-  //     print("Login Success");
-  //     // Get.offAll(() => PersistentBottomView(
-  //     //     // email: user.email ?? "email null",
-  //     //     ));
-  //     print('email = ${user.email}');
-  //     // Save user information for persistence
-  //     final box = GetStorage();
-  //     box.write('isLoggedIn', true);
-  //     box.write('email', user.email);
-  //   }
-  // }
 
   // Function to handle routing based on user status
   _initialPage(User? user) async {
@@ -67,11 +50,12 @@ class AuthController extends GetxController {
 
     if (user == null) {
       // If no user, navigate to login page
-      print("Login Page");
+      debugPrint("Login Page");
       // Get.offAll(() => const BoardingScreen());
     } else {
       // If user is logged in, navigate to home screen
-      print("Login Success");
+      debugPrint("Login Success");
+      Get.offAll(() => PersistentBottomView());
       await userDetailController.getCurrentUser().then((userId) {
         if (userId != null) {
           userDetailController.getUserDetail(userId).then((userDetail) {
@@ -129,7 +113,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       // Show snackbar with error message
-      print('Error during registration: $e');
+      debugPrint('Error during registration: $e');
       Get.snackbar(
         'Registration Error',
         'An error occurred during registration.',

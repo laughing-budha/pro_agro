@@ -44,7 +44,7 @@ class BookingPage extends StatelessWidget {
           onPressed: () {
             _createBooking(context);
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         // floatingActionButton: GetStorage().read('isadmin') == true
         //     ? FloatingActionButton(
@@ -187,7 +187,8 @@ class BookingPage extends StatelessWidget {
               onPressed: () {
                 final produce = Produce(
                     name: name,
-                    rating: (Random().nextDouble() * 5).toPrecision(1),
+                    rating:
+                        (Random().nextDouble() * (5 - 3) + 3).toPrecision(1),
                     community: community,
                     sowingMonth: sowingMonth,
                     harvestingMonth: harvestingMonth,
@@ -254,12 +255,12 @@ class ProduceCard extends StatelessWidget {
                   GetStorage().read('isadmin') == true
                       ? IconButton(
                           onPressed: onDelete,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.delete,
                             color: Colors.grey,
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
               const SizedBox(height: 8.0),
