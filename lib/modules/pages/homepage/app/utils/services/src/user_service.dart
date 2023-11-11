@@ -1,9 +1,11 @@
-part of rest_api_service;
+import 'package:flutter/material.dart';
+import '../../../constans/app_constants.dart';
+import '../model/user.dart';
 
 /// FAKE USER SERVICE
 // put all custom setup in RestApiService (duration timeout, exception handling , etc..)
 // and extend restApiService, if you need custom service provider
-class UserService extends RestApiServices {
+class UserService {
   static final UserService _singleton = UserService._internal();
 
   factory UserService() {
@@ -21,17 +23,17 @@ class UserService extends RestApiServices {
 
   final _userA = const User(
     id: "fwg123",
-    name: "Gia Store",
-    country: "Indonesia",
-    city: "Bandung",
+    name: "Anand Stores",
+    country: "India",
+    city: "Kottayam",
     profilImage: AssetImage(ImageRasterPath.market),
   );
 
   final _userB = const User(
     id: "fwg345",
     profilImage: AssetImage(ImageRasterPath.market2),
-    name: "Fashion Store",
-    country: "USA",
-    city: "New York",
+    name: "Agro Store",
+    country: "India",
+    city: "Ernakulam",
   );
 }

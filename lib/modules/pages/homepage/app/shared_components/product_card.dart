@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../constans/app_constants.dart';
-import '../utils/ui/ui_utils.dart';
+import '../utils/ui/app_snackbar.dart';
 
 class ProductCardData {
-  final ImageProvider image;
+  final String imageurl;
   final double price;
   final String name;
   final bool initialFavorite;
 
   const ProductCardData({
-    required this.image,
+    required this.imageurl,
     required this.price,
     required this.name,
     required this.initialFavorite,
@@ -46,7 +46,7 @@ class ProductCard extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  _buildImage(data.image),
+                  _buildImage(data.imageurl),
                   _buildFavoriteIcon(
                     data.initialFavorite,
                     onTap: (isFavorite) {
@@ -55,7 +55,7 @@ class ProductCard extends StatelessWidget {
                       }
                       AppSnackbar.showStatusFavoriteProduct(
                         isFavorite: isFavorite,
-                        productImage: data.image,
+                        imageurl: data.imageurl,
                         productName: data.name,
                       );
                     },
@@ -72,10 +72,10 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildImage(ImageProvider image) {
-    return Image(
-      image: image,
-      fit: BoxFit.cover,
+  Widget _buildImage(String imageurl) {
+    return Image.network(
+     imageurl,
+     fit: BoxFit.cover,
     );
   }
 
@@ -123,7 +123,7 @@ class ProductCard extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            " $price",
+            "$price",
             style: TextStyle(
               color: kFontColorPallets[0],
               fontWeight: FontWeight.bold,

@@ -1,163 +1,77 @@
-part of rest_api_service;
+import 'dart:math';
 
-/// FAKE PRODUCT SERVICE
-// put all custom setup in RestApiService (duration timeout, exception handling , etc..)
-// and extend restApiService, if you need custom service provider
-class ProductService extends RestApiServices {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+
+import '../model/product.dart';
+
+class ProductService {
   static final ProductService _singleton = ProductService._internal();
 
   factory ProductService() {
     return _singleton;
   }
+
   ProductService._internal();
 
-  Product? getProductByID(String id) {
-    final allProduct = getAll();
-    final result = allProduct.where((product) => product.id == id).toList();
-    return (result.length > 0) ? result[0] : null;
+  Future<Product?> getProductByID(String id) async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('products').doc(id).get();
+    if (snapshot.exists) {
+      final data = snapshot.data();
+      if (data != null) {
+        final product = Product(
+          id: id,
+          idUser: 'fwg123',
+          images: List<String>.from(data['images']),
+          name: data['name'],
+          price: data['price'].toDouble(),
+          isFavorite: data['isFavorite'],
+          description: data['description'],
+          totalViews: Random().nextInt(100),
+          totalReview: Random().nextInt(30),
+          rating: (Random().nextDouble() * 5).toPrecision(1),
+        );
+        return product;
+      }
+    }
+    return null;
   }
 
-  List<Product> getAll() {
-    return [
-      _vr,
-      _orangeBlouse,
-      _cardigan,
-      _shoes,
-      _blueMidiDress,
-      _bag,
-      _pinkJacket,
-      _shoes2,
-    ];
+  Future<List<Product>> getAll() async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('products').get();
+    final List<Product> products = [];
+    for (final doc in snapshot.docs) {
+      final data = doc.data();
+      final product = Product(
+        id: doc.id,
+        idUser: 'fwg123',
+        images: List<String>.from(data['images']),
+        name: data['name'],
+        price: data['price'].toDouble(),
+        isFavorite: data['isFavorite'],
+        description: data['description'],
+        totalViews: Random().nextInt(100),
+        totalReview: Random().nextInt(30),
+        rating: (Random().nextDouble() * 5).toPrecision(1),
+      );
+      products.add(product);
+    }
+    return products;
   }
 
-  List<Product> getFashion() {
-    return [
-      _pinkJacket,
-      _shoes2,
-      _orangeBlouse,
-      _cardigan,
-      _shoes,
-      _blueMidiDress,
-    ];
+  Future<List<Product>> getAgroProduce() async {
+    // Implementation similar to getAll() but with specific conditions/filtering
+    final List<Product> agroProduce = [];
+    // Fetch and filter products accordingly
+    return agroProduce;
   }
 
-  final _bag = const Product(
-    id: "35366",
-    idUser: "fwg123",
-    images: [AssetImage(ImageRasterPath.bag)],
-    name:
-        "12 Colors Men Women Rope Bags Waterproof Drawstring Backpack Travel Hiking Bag ",
-    price: 5,
-    isFavorite: false,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 20,
-    totalReview: 3,
-    rating: 4.5,
-  );
-
-  final _blueMidiDress = const Product(
-    id: "23515",
-    idUser: "fwg123",
-    images: [AssetImage(ImageRasterPath.blueMidiDress)],
-    name:
-        "Summer Womens Shirt Drees Loose Dress V-Neck Embroidered Midi Long Cotton Dress ",
-    price: 15.2,
-    isFavorite: true,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 100,
-    totalReview: 0,
-    rating: 0,
-  );
-
-  final _cardigan = const Product(
-    id: "54647",
-    idUser: "fwg345",
-    images: [
-      AssetImage(ImageRasterPath.cardigan),
-      AssetImage(ImageRasterPath.cardigan2),
-    ],
-    name:
-        "Women Knitted Sweater Open Front Pocket Coat Long Cardigan Coat/Jacket Winter",
-    price: 10.1,
-    isFavorite: true,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 1135,
-    totalReview: 140,
-    rating: 4.8,
-  );
-
-  final _orangeBlouse = const Product(
-    id: "23455",
-    idUser: "fwg345",
-    images: [AssetImage(ImageRasterPath.orangeBlouse)],
-    name: "Product ",
-    price: 100,
-    isFavorite: false,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 10,
-    totalReview: 20,
-    rating: 5,
-  );
-
-  final _pinkJacket = const Product(
-    id: "77532",
-    idUser: "fwg345",
-    images: [AssetImage(ImageRasterPath.pinkJacket)],
-    name: "Barbour Women's Ladies Wax Biker Style Jacket Pink size 10",
-    price: 30.2,
-    isFavorite: true,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 120,
-    totalReview: 10,
-    rating: 4.6,
-  );
-
-  final _shoes = const Product(
-    id: "56621",
-    idUser: "fwg345",
-    images: [AssetImage(ImageRasterPath.shoes)],
-    name: "DC Shoes Pure Men's Leather Low Top Classic Skateboarding Sneakers",
-    price: 1200.0,
-    isFavorite: false,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 12,
-    totalReview: 1,
-    rating: 5,
-  );
-
-  final _shoes2 = const Product(
-    id: "45612",
-    idUser: "fwg345",
-    images: [AssetImage(ImageRasterPath.shoes2)],
-    name:
-        "Brooks Mens Glycerin 18 1103291D064 Black Blue Running Shoes Lace Up Size 11.5 D ",
-    price: 12.2,
-    isFavorite: false,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 100,
-    totalReview: 5,
-    rating: 4.5,
-  );
-
-  final _vr = const Product(
-    id: "99010",
-    idUser: "fwg123",
-    images: [AssetImage(ImageRasterPath.vr)],
-    // images: [AssetImage('assets/images/raster/vr.png')],
-    name: "Product ",
-    price: 200,
-    isFavorite: false,
-    description:
-        "Lorem ipsum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    totalViews: 100,
-    totalReview: 300,
-    rating: 4.5,
-  );
+  Future<List<Product>> getHotDeals() async {
+    // Implementation similar to getAll() but with specific conditions/filtering
+    final List<Product> hotDeals = [];
+    // Fetch and filter products accordingly
+    return hotDeals;
+  }
 }
