@@ -4,18 +4,17 @@ import '../../controllers/splash_controller.dart';
 
 class SplashScreen extends GetView<SplashController> {
   const SplashScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 9, 156, 85),
+      backgroundColor: const Color(0xff2b6048),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/logo.png'),
+            Image.asset('assets/icon.png'),
             const SizedBox(height: 30),
-            const CircularProgressIndicator(),
+            // const CircularProgressIndicator(),
           ],
         ),
       ),
