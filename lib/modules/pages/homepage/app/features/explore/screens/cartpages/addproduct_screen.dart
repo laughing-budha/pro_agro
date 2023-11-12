@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../product/views/screens/product_detail_screen.dart';
 import '../../controllers/addproduct_controller.dart';
 
 class AddProductPage extends GetView<AddProductController> {
@@ -27,8 +28,15 @@ class AddProductPage extends GetView<AddProductController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Product'),
-      ),
+          backgroundColor: const Color(0xfff0f4f7),
+          elevation: 0,
+          leading: CustomBackButton(onPressed: () => Get.back()),
+          title: const Text(
+            "Add Products",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
