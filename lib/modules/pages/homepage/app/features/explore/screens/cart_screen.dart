@@ -46,7 +46,7 @@ class CartPage extends GetView<ExploreController> {
           onPressed: _explorecontroller.cartProducts.isEmpty
               ? null
               : () {
-                  Get.to(() => CheckoutPage(totalPrice: '55'));
+                  Get.to(() => const CheckoutPage(totalPrice: '55'));
                 },
           child: const Text("Buy Now"),
         ),

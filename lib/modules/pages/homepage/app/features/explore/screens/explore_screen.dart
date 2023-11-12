@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:pro_agro/modules/pages/homepage/app/features/filter/filterproduct_page.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import '../../../constans/app_constants.dart';
 import '../../../shared_components/filter_button.dart';
@@ -55,7 +54,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                     const SizedBox(width: 5),
                     FilterSizeButton(
-                      icon: FontAwesomeIcons.sliders,
+                      icon: FontAwesomeIcons.searchengin,
                       onPressed: () {
                         // Get.to(() => const ProductFilterPage());
                         _controller.ref();
@@ -114,8 +113,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       _controller.goToDetailProduct(product),
                   searchQuery: _controller.searchQuery.value,
                   onSearch: (searchResults, searchQuery) {}),
-           
-           
             ],
           ),
         ),
