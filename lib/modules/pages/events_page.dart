@@ -29,11 +29,54 @@ class _EventsPageState extends State<EventsPage> {
   void _initializeEvents() {
     _mySelectedEvents.value = {
       // Initialize the map with your desired events
-      '2023-05-31': [
-        {'eventTitle': 'Event 1', 'eventDescp': 'Description for Event 1'}
+      '2023-06-30': [
+        {
+          'eventTitle': 'Local Diary Farmer Meeting',
+          'eventDescp':
+              'The Local Meeting for Dairy farmers will be held at the Panchayath office to address the problems and difficulties faced by the diary farmers'
+        }
       ],
-      '2023-06-01': [
-        {'eventTitle': 'Event 2', 'eventDescp': 'Description for Event 2'}
+      '2023-07-18': [
+        {
+          'eventTitle': ' 50% Subsidy for Agricultural Power Tools',
+          'eventDescp':
+              'The government has taken the initiative to provide machine subsidies. Under this scheme, up to 50 percent subsidy is given to farmers to buy agricultural machinery'
+        }
+      ],
+      '2023-07-14': [
+        {
+          'eventTitle': ' Thirunelly Seed Festival',
+          'eventDescp':
+              'At the Thirunelly Seed Festival on July 14 to 16, 2023, one could learn all about 350 rice varieties, 70 millets, 243 banana plants, 138 tubers, 60 leafy vegetables and handloom clothes made of organic cotton displayed in different stalls.'
+        }
+      ],
+      '2023-07-03': [
+        {
+          'eventTitle': 'Krishibhavan Sapling Distribution',
+          'eventDescp':
+              'It has been decided to conduct the Sapling distribution on 3rd of July from 10am to 12pm at the Krishibhavan Office.'
+        }
+      ],
+      '2023-07-01': [
+        {
+          'eventTitle': 'Panchayath level Seed Distribution',
+          'eventDescp':
+              'The Panchyath Level Seed Distribution will take place on 1st of July from 11am to 12pm at the corresponding Panchayath offices.'
+        }
+      ],
+      '2023-06-15': [
+        {
+          'eventTitle': 'Panchayath level Seed Distribution',
+          'eventDescp':
+              'The Panchyath Level Seed Distribution will take place on 17th of June from 11am to 12pm at the corresponding Panchayath offices.'
+        }
+      ],
+      '2023-06-23': [
+        {
+          'eventTitle': 'Panchayath Water Tank Subsidy',
+          'eventDescp':
+              'The Panchyath Level Water Tank Subsidy Registration'
+        }
       ],
     };
   }
@@ -41,11 +84,10 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
+        appBar: AppBar(
             backgroundColor: const Color(0xfff0f4f7),
             elevation: 0,
             leadingWidth: 250,
-           
             leading: const Padding(
               padding: EdgeInsets.only(
                 top: 20,
@@ -110,9 +152,9 @@ class _EventsPageState extends State<EventsPage> {
                       ),
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text('Event Title: ${event['eventTitle']}'),
+                        child: Text('${event['eventTitle']}'),
                       ),
-                      subtitle: Text('Description: ${event['eventDescp']}'),
+                      subtitle: Text('${event['eventDescp']}'),
                     );
                   },
                 );
